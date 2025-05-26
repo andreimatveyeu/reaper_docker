@@ -1,0 +1,26 @@
+#!/bin/sh
+xhost +
+
+docker run \
+    -it \
+    --rm \
+    --name reaper \
+    -u $(id -u):$(id -g) \
+    --ipc=host \
+    --cap-add=sys_nice \
+    --ulimit rtprio=99  \
+    --group-add 17 \
+    --device /dev/snd \
+    -e PULSE_SERVER=unix:/tmp/pulse/native \
+    -e DISPLAY=$DISPLAY \
+    -e HOME=$HOME \
+    -e XDG_RUNTIME_DIR=/tmp \
+    -e QT_X11_NO_MITSHM=1 \
+    -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+    -v /etc/passwd:/etc/passwd:ro \
+    -v /etc/group:/etc/group:ro \
+    -v $(pwd):/cwd \
+    -v $XDG_RUNTIME_DIR/pipewire-0:/tmp/pipewire-0 \
+    -v $XDG_RUNTIME_DIR/pulse:/tmp/pulse \
+    -w /app \
+    reaper:latest
