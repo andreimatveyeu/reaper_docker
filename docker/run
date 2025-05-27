@@ -5,6 +5,7 @@ docker run \
     -it \
     --rm \
     --name reaper \
+    --network=none \
     -u $(id -u):$(id -g) \
     --ipc=host \
     --cap-add=sys_nice \
