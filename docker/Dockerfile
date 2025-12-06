@@ -1,4 +1,4 @@
-FROM ubuntu:25.04
+FROM ubuntu:25.10
 
 # Set frontend to noninteractive to avoid prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -39,7 +39,7 @@ RUN mkdir -p /app
 WORKDIR /app
 
 # Define Reaper download URL as a build argument
-ARG REAPER_URL="https://dlcf.reaper.fm/7.x/reaper739_linux_x86_64.tar.xz"
+ARG REAPER_URL="https://www.reaper.fm/files/7.x/reaper755_linux_x86_64.tar.xz"
 
 # Download and install Reaper
 # Using -L for curl to follow redirects
