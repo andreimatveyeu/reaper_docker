@@ -28,6 +28,86 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
+# Install audio plugins (LV2, LADSPA, VST, VST3, DSSI)
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        # LV2 plugins
+        calf-plugins \
+        lsp-plugins-lv2 \
+        x42-plugins \
+        dragonfly-reverb-lv2 \
+        guitarix-lv2 \
+        zynaddsubfx-lv2 \
+        zam-plugins \
+        swh-lv2 \
+        mda-lv2 \
+        invada-studio-plugins-lv2 \
+        eq10q \
+        synthv1-lv2 \
+        padthv1-lv2 \
+        samplv1-lv2 \
+        drumkv1-lv2 \
+        drumgizmo \
+        avldrums.lv2 \
+        geonkick \
+        so-synth-lv2 \
+        setbfree \
+        ir.lv2 \
+        lv2vocoder \
+        rubberband-lv2 \
+        bshapr \
+        bslizr \
+        abgate \
+        bsequencer \
+        fomp \
+        dpf-plugins-lv2 \
+        blop-lv2 \
+        bankstown-lv2 \
+        # LADSPA plugins
+        lsp-plugins-ladspa \
+        swh-plugins \
+        tap-plugins \
+        caps \
+        cmt \
+        dpf-plugins-ladspa \
+        invada-studio-plugins-ladspa \
+        blop \
+        autotalent \
+        amb-plugins \
+        blepvco \
+        fil-plugins \
+        rev-plugins \
+        vco-plugins \
+        ste-plugins \
+        wah-plugins \
+        bs2b-ladspa \
+        omins \
+        rubberband-ladspa \
+        # VST/VST3 plugins
+        lsp-plugins-vst \
+        lsp-plugins-vst3 \
+        dragonfly-reverb-vst \
+        dragonfly-reverb-vst3 \
+        iem-plugin-suite-vst \
+        iem-plugin-suite-vst3 \
+        dpf-plugins-vst \
+        dpf-plugins-vst3 \
+        amsynth \
+        zynaddsubfx-vst \
+        carla-vst \
+        # DSSI plugins
+        hexter \
+        xsynth-dssi \
+        whysynth \
+        wsynth-dssi \
+        fluidsynth-dssi \
+        dpf-plugins-dssi \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+
+# LV2 discovery via Lilv library (used by Reaper for LV2 plugin scanning)
+ENV LV2_PATH="/usr/lib/lv2:/usr/lib/x86_64-linux-gnu/lv2"
+
 # Configure locales
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 ENV LANG="en_US.UTF-8" \

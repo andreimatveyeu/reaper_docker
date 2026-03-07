@@ -15,6 +15,26 @@ The Docker image encapsulates REAPER along with all its necessary dependencies, 
 - **PipeWire-JACK Integration:** The image is configured to launch REAPER with `pw-jack`, enabling seamless integration with the modern PipeWire audio server and JACK applications. Importantly, this setup utilizes the host machine's PipeWire instance, allowing audio to be shared and routed between the containerized REAPER and other applications running on the host.
 - **Easy Updates:** The Dockerfile can be easily modified to use different versions of REAPER by changing the `REAPER_URL` build argument.
 
+## Included Audio Plugins
+
+The image comes with 70+ open-source audio plugin packages pre-installed across multiple formats.
+
+Reaper natively supports **LV2**, **VST**, **VST3**, and **CLAP** plugins on Linux. LV2 plugins are auto-discovered via the `LV2_PATH` environment variable. VST/VST3 plugin paths can be configured in Reaper under Options → Preferences → Plug-ins → VST.
+
+**LADSPA** and **DSSI** plugins are not natively supported by Reaper, but are accessible through **Carla** (included as `carla-vst`), which acts as a plugin host wrapper.
+
+### LV2 (native)
+Calf, LSP Plugins, x42, Dragonfly Reverb, Guitarix, ZynAddSubFX, ZaM Plugins, SWH, MDA, Invada Studio, EQ10Q, Synthv1, Padthv1, Samplv1, Drumkv1, DrumGizmo, AVL Drums, Geonkick, SO Synth, setBfree, IR, LV2 Vocoder, Rubberband, BShapr, BSlizr, abGate, BSequencer, FOMP, DPF Plugins, BLOP, Bankstown
+
+### VST / VST3 (native)
+LSP Plugins, Dragonfly Reverb, IEM Plugin Suite, DPF Plugins, amsynth, ZynAddSubFX, Carla
+
+### LADSPA (via Carla)
+LSP Plugins, SWH, TAP, CAPS, CMT, DPF Plugins, Invada Studio, BLOP, Autotalent, AMB, BlepVCO, FIL, REV, VCO, STE, WAH, bs2b, Omins, Rubberband
+
+### DSSI (via Carla)
+Hexter, Xsynth, WhySynth, WSynth, FluidSynth, DPF Plugins
+
 ## How to Use
 
 ### Prerequisites
