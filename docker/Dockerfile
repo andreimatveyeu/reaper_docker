@@ -105,6 +105,35 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
+# Install unzip and create drumgizmo kits directory
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends unzip && \
+    mkdir -p /usr/share/drumgizmo/kits && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+
+# Download DrumGizmo drum kits (high-quality multi-mic acoustic drums)
+# Each kit is a separate layer so failures don't require re-downloading everything
+RUN curl -L --retry 5 --retry-delay 10 --retry-all-errors -o /tmp/aasimonster.zip \
+    "https://drumgizmo.org/kits/Aasimonster/aasimonster2_1.zip" && \
+    unzip -q /tmp/aasimonster.zip -d /usr/share/drumgizmo/kits/ && \
+    rm /tmp/aasimonster.zip
+
+RUN curl -L --retry 5 --retry-delay 10 --retry-all-errors -o /tmp/drskit.zip \
+    "https://drumgizmo.org/kits/DRSKit/DRSKit2_1.zip" && \
+    unzip -q /tmp/drskit.zip -d /usr/share/drumgizmo/kits/ && \
+    rm /tmp/drskit.zip
+
+RUN curl -L --retry 5 --retry-delay 10 --retry-all-errors -o /tmp/crocellkit.zip \
+    "https://drumgizmo.org/kits/CrocellKit/CrocellKit1_1.zip" && \
+    unzip -q /tmp/crocellkit.zip -d /usr/share/drumgizmo/kits/ && \
+    rm /tmp/crocellkit.zip
+
+RUN curl -L --retry 5 --retry-delay 10 --retry-all-errors -o /tmp/muldjordkit.zip \
+    "https://drumgizmo.org/kits/MuldjordKit/MuldjordKit3.zip" && \
+    unzip -q /tmp/muldjordkit.zip -d /usr/share/drumgizmo/kits/ && \
+    rm /tmp/muldjordkit.zip
+
 # LV2 discovery via Lilv library (used by Reaper for LV2 plugin scanning)
 ENV LV2_PATH="/usr/lib/lv2:/usr/lib/x86_64-linux-gnu/lv2"
 
