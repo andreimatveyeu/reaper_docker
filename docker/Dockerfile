@@ -113,24 +113,26 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 # Download DrumGizmo drum kits (high-quality multi-mic acoustic drums)
-# Each kit is a separate layer so failures don't require re-downloading everything
-RUN curl -L --retry 5 --retry-delay 10 --retry-all-errors -o /tmp/aasimonster.zip \
-    "https://drumgizmo.org/kits/Aasimonster/aasimonster2_1.zip" && \
+# Each kit is a separate layer so failures don't require re-downloading everything.
+# Using a resume loop (curl -C -) so retries continue where they left off instead
+# of restarting, which avoids re-downloading already-transferred data.
+RUN until curl -L -C - -o /tmp/aasimonster.zip \
+    "https://drumgizmo.org/kits/Aasimonster/aasimonster2_1.zip"; do sleep 10; done && \
     unzip -q /tmp/aasimonster.zip -d /usr/share/drumgizmo/kits/ && \
     rm /tmp/aasimonster.zip
 
-RUN curl -L --retry 5 --retry-delay 10 --retry-all-errors -o /tmp/drskit.zip \
-    "https://drumgizmo.org/kits/DRSKit/DRSKit2_1.zip" && \
+RUN until curl -L -C - -o /tmp/drskit.zip \
+    "https://drumgizmo.org/kits/DRSKit/DRSKit2_1.zip"; do sleep 10; done && \
     unzip -q /tmp/drskit.zip -d /usr/share/drumgizmo/kits/ && \
     rm /tmp/drskit.zip
 
-RUN curl -L --retry 5 --retry-delay 10 --retry-all-errors -o /tmp/crocellkit.zip \
-    "https://drumgizmo.org/kits/CrocellKit/CrocellKit1_1.zip" && \
+RUN until curl -L -C - -o /tmp/crocellkit.zip \
+    "https://drumgizmo.org/kits/CrocellKit/CrocellKit1_1.zip"; do sleep 10; done && \
     unzip -q /tmp/crocellkit.zip -d /usr/share/drumgizmo/kits/ && \
     rm /tmp/crocellkit.zip
 
-RUN curl -L --retry 5 --retry-delay 10 --retry-all-errors -o /tmp/muldjordkit.zip \
-    "https://drumgizmo.org/kits/MuldjordKit/MuldjordKit3.zip" && \
+RUN until curl -L -C - -o /tmp/muldjordkit.zip \
+    "https://drumgizmo.org/kits/MuldjordKit/MuldjordKit3.zip"; do sleep 10; done && \
     unzip -q /tmp/muldjordkit.zip -d /usr/share/drumgizmo/kits/ && \
     rm /tmp/muldjordkit.zip
 
