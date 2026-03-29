@@ -23,5 +23,6 @@ docker run \
     -v $(pwd):/cwd \
     -v $XDG_RUNTIME_DIR/pipewire-0:/tmp/pipewire-0 \
     -v $XDG_RUNTIME_DIR/pulse:/tmp/pulse \
+    -v $HOME:$HOME \
     -w /app \
     reaper:latest
