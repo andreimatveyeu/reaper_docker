@@ -1,4 +1,4 @@
-FROM ubuntu:25.10
+FROM ubuntu:26.04@sha256:53958ec7b67c2c9355df922dd08dbf0360611f8c3cdb656875e81873db9ffdba
 
 # Set frontend to noninteractive to avoid prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -41,7 +41,6 @@ RUN apt-get update && \
         zam-plugins \
         swh-lv2 \
         mda-lv2 \
-        invada-studio-plugins-lv2 \
         eq10q \
         synthv1-lv2 \
         padthv1-lv2 \
@@ -70,7 +69,6 @@ RUN apt-get update && \
         caps \
         cmt \
         dpf-plugins-ladspa \
-        invada-studio-plugins-ladspa \
         blop \
         autotalent \
         amb-plugins \
@@ -97,7 +95,6 @@ RUN apt-get update && \
         carla-vst \
         # DSSI plugins
         hexter \
-        xsynth-dssi \
         whysynth \
         wsynth-dssi \
         fluidsynth-dssi \
