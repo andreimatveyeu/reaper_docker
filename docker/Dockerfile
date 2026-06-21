@@ -147,7 +147,7 @@ RUN mkdir -p /app
 WORKDIR /app
 
 # Define Reaper download URL as a build argument
-ARG REAPER_URL="https://www.reaper.fm/files/7.x/reaper755_linux_x86_64.tar.xz"
+ARG REAPER_URL="https://www.reaper.fm/files/7.x/reaper774_linux_x86_64.tar.xz"
 
 # Download and install Reaper
 # Using -L for curl to follow redirects
