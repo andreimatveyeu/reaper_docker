@@ -1,6 +1,14 @@
 #!/bin/sh
 xhost +
 
+EXTRA_MOUNTS=""
+if [ -n "$REAPER_PROJECTS_DIR" ]; then
+    EXTRA_MOUNTS="$EXTRA_MOUNTS -v $REAPER_PROJECTS_DIR:/proj"
+fi
+if [ -n "$REAPER_MEDIA_DIR" ]; then
+    EXTRA_MOUNTS="$EXTRA_MOUNTS -v $REAPER_MEDIA_DIR:/media"
+fi
+
 docker run \
     -it \
     --rm \
@@ -23,6 +31,7 @@ docker run \
     -v $(pwd):/cwd \
     -v $XDG_RUNTIME_DIR/pipewire-0:/tmp/pipewire-0 \
     -v $XDG_RUNTIME_DIR/pulse:/tmp/pulse \
-    -v $HOME:$HOME \
+    -v $HOME/.config/REAPER:$HOME/.config/REAPER \
+    $EXTRA_MOUNTS \
     -w /app \
     reaper:latest
