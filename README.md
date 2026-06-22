@@ -132,6 +132,23 @@ REAPER_MEDIA_DIR=/path/to/media \
 - `REAPER_PROJECTS_DIR` is mounted at `/proj`.
 - `REAPER_MEDIA_DIR` is mounted at `/media`.
 
+#### Optional pre/post hooks
+
+You can run arbitrary host commands before the container starts and after it
+exits by setting environment variables:
+
+```bash
+REAPER_PRE_HOOK='echo starting; my-setup-script' \
+REAPER_POST_HOOK='my-cleanup-script' \
+./docker/run
+```
+
+- `REAPER_PRE_HOOK` runs on the host before `docker run`.
+- `REAPER_POST_HOOK` runs on the host after the container exits — including when
+  REAPER is closed or the run is interrupted (e.g. Ctrl-C).
+
+Both are optional and executed via `sh -c`.
+
 ### Customizing the REAPER Version
 
 The REAPER version is controlled by the `REAPER_URL` build argument in

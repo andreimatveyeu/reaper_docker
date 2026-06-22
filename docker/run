@@ -1,6 +1,20 @@
 #!/bin/sh
 xhost +
 
+# Optional host-side hooks run around the container:
+#   REAPER_PRE_HOOK  - shell command run before the container starts
+#   REAPER_POST_HOOK - shell command run after the container exits
+# Both are optional; when unset, nothing extra runs.
+if [ -n "$REAPER_PRE_HOOK" ]; then
+    echo "run: executing pre-hook" >&2
+    sh -c "$REAPER_PRE_HOOK"
+fi
+
+# Run the post-hook on exit (normal or interrupted), even if docker run fails.
+if [ -n "$REAPER_POST_HOOK" ]; then
+    trap 'echo "run: executing post-hook" >&2; sh -c "$REAPER_POST_HOOK"' EXIT
+fi
+
 EXTRA_MOUNTS=""
 if [ -n "$REAPER_PROJECTS_DIR" ]; then
     EXTRA_MOUNTS="$EXTRA_MOUNTS -v $REAPER_PROJECTS_DIR:/proj"
